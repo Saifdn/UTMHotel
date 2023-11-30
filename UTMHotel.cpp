@@ -295,6 +295,31 @@ int binarySearch(int searchkey, int arraysize, Customer cust[]){
 }
 
 
+/*=========================================================
+    Binary Search based on Room Number
+=========================================================*/
+int binarySearch(int searchkey, int arraysize, Room room[]){
+    bool found = false;
+    int index = -1;
+    int middle, left = 0, right = arraysize-1;
+
+    while((left<=right) && (!found)){
+        middle = (left + right)/2;
+        if(room[middle].getRoomNumber() == searchkey){
+            index = middle;
+            found = true;
+        }
+
+        else if(room[middle].getRoomNumber() > searchkey)
+            right = middle-1;
+
+        else 
+            left = middle+1;
+    }
+    return index;
+}
+
+
 
 /*=========================================================
     Definition class Customer
