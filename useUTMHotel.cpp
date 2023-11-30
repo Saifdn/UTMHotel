@@ -14,16 +14,48 @@ See https://github.com/Saifdn/UTMHotel.
 
 \************************************************************************/
 
+#include "UTMHotel.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "UTMHotel.hpp"
-#include "UTMHotel.cpp"
+
 using namespace std;
 
 int main() {
-    
 
+    Room room[15];
+    int choice;
+    
+    cout << "+===================+" << endl
+        << "      Main Menu" << endl
+        << "+===================+" << endl
+        << "1. Reservation" << endl
+        << "2. Check-In" << endl
+        << "3. Check-Out" << endl
+        << "Enter choice: ";
+    cin >> choice;
+
+    if(choice == 1){
+        readRoom(room);
+        printAvailableRoom(room);
+
+        int roomNum;
+        cout<<"Enter room no. : ";
+        cin>>roomNum;
+
+        
+    }
+    else if(choice == 2){
+
+    }
+    else if(choice == 3){
+
+    }
+    else{
+
+    }
+
+    system("PAUSE");
     return 0;
 }
 

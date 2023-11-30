@@ -18,8 +18,54 @@ See https://github.com/Saifdn/UTMHotel.
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
+
+/*=========================================================
+    Functions Definition
+=========================================================*/
+void checkFile(fstream& file) {
+    if (!file.is_open()) {
+        cout << "Error opening file!" << endl;
+        exit(1);
+    }
+}
+
+void readRoom(Room room[]){
+
+    fstream file;
+
+    file.open("Room/room.txt",ios::in);
+
+    checkFile(file);
+
+    int roomNumber;
+    string type;
+    float price;
+    int availability;
+    int count = 0;
+
+    while (file >> roomNumber >> type >> price >> availability && count < 15) {
+        bool isAvailable = (availability == 1);
+        room[count++] = Room(roomNumber, type, price, isAvailable);
+    }
+
+    file.close();
+}
+
+void printAvailableRoom(Room room[]){
+    for(int i = 0; i < 15; i++){
+        if(room[i].getAvailability()){
+            cout<<left
+                <<setw(4)<<room[i].getRoomNumber()
+                <<setw(8)<<room[i].getType()
+                <<setw(3)<<"RM "
+                <<setw(4)<<room[i].getRoomRate()<<" per night"<<endl;
+        }
+    }
+}
+
 
 /*=========================================================
     Improved Bubble Sort
@@ -59,8 +105,8 @@ void merge(Customer data[], int first, int mid, int last){
         
         int val1 = 0, val2 =0;
 
-        int array1[3] = data[first1].getCheckInDate();
-        int array2[3] = data[first2].getCheckInDate();
+        int *array1 = data[first1].getCheckInDate();
+        int *array2 = data[first2].getCheckInDate();
 
         for(int j = 0; j < 3; j++){
             val1 += array1[j];
@@ -103,15 +149,6 @@ void mergeSort(Customer data[], int first, int last){
 /*=========================================================
     Quick Sort based on Room Number
 =========================================================*/
-void quickSortRoomNumber(Room room[], int first, int last){
-    int cut;
-    if(first<last){
-        cut = partitionRoomNumber(room, first, last);
-        quickSortRoomNumber(room, first, cut);
-        quickSortRoomNumber(room, cut+1, last);
-    }
-}
-
 int partitionRoomNumber(Room room[], int first, int last){
     int pivot;
     Room temp;
@@ -140,19 +177,19 @@ int partitionRoomNumber(Room room[], int first, int last){
     return cutPoint;
 }
 
+void quickSortRoomNumber(Room room[], int first, int last){
+    int cut;
+    if(first<last){
+        cut = partitionRoomNumber(room, first, last);
+        quickSortRoomNumber(room, first, cut);
+        quickSortRoomNumber(room, cut+1, last);
+    }
+}
+
 
 /*=========================================================
     Quick Sort based on Customer ID
 =========================================================*/
-void quickSortCustID(Customer cust[], int first, int last){
-    int cut;
-    if(first<last){
-        cut = partitionCustID(cust, first, last);
-        quickSortCustID(cust, first, cut);
-        quickSortCustID(cust, cut+1, last);
-    }
-}
-
 int partitionCustID(Customer cust[], int first, int last){
     int pivot;
     Customer temp;
@@ -182,18 +219,19 @@ int partitionCustID(Customer cust[], int first, int last){
     return cutPoint;
 }
 
-/*=========================================================
-    Quick Sort based on Billing ID
-=========================================================*/
-void quickSortBillID(Billing bill[], int first, int last){
+void quickSortCustID(Customer cust[], int first, int last){
     int cut;
     if(first<last){
-        cut = partitionBillID(bill, first, last);
-        quickSortBillID(bill, first, cut);
-        quickSortBillID(bill, cut+1, last);
+        cut = partitionCustID(cust, first, last);
+        quickSortCustID(cust, first, cut);
+        quickSortCustID(cust, cut+1, last);
     }
 }
 
+
+/*=========================================================
+    Quick Sort based on Billing ID
+=========================================================*/
 int partitionBillID(Billing bill[], int first, int last){
     int pivot;
     Billing temp;
@@ -221,6 +259,15 @@ int partitionBillID(Billing bill[], int first, int last){
         }
     }
     return cutPoint;
+}
+
+void quickSortBillID(Billing bill[], int first, int last){
+    int cut;
+    if(first<last){
+        cut = partitionBillID(bill, first, last);
+        quickSortBillID(bill, first, cut);
+        quickSortBillID(bill, cut+1, last);
+    }
 }
 
 /*=========================================================

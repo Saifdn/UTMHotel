@@ -17,10 +17,9 @@ See https://github.com/Saifdn/UTMHotel.
 #ifndef UTMHOTEL_H
 #define UTMHOTEL_H
 
-#include <iostream>
 #include <string>
 #include <fstream>
-#include <ctime>
+
 using namespace std;
 
 class Customer{
@@ -98,5 +97,11 @@ class Room{
         bool getAvailability();
         void displayRoomDetails();
 };
+
+void checkFile(fstream&);
+
+void readRoom(Room []);
+
+void printAvailableRoom(Room []);
 
 #endif
