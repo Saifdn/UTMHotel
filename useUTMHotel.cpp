@@ -37,13 +37,24 @@ int main() {
 
     if(choice == 1){
         readRoom(room);
+
+        int sort1;
+        cout<<"Sort by: 1. Room Number 2. Price";
+        cin>>sort1;
+
+        if(sort1 == 1)
+            quickSortRoomNumber(room, 15-15, 15-1);
+        else
+            bubbleSort(room, 15);
+
         printAvailableRoom(room);
 
         int roomNum;
         cout<<"Enter room no. : ";
         cin>>roomNum;
 
-        
+        cout<<"test Index: "<<binarySearch(roomNum, 15, room);
+
     }
     else if(choice == 2){
 
