@@ -98,6 +98,20 @@ class Room{
         void displayRoomDetails();
 };
 
+void bubbleSort(Room [], int);
+
+void mergeSort(Customer [], int, int);
+
+void quickSortRoomNumber(Room [], int, int);
+
+void quickSortCustID(Customer [], int, int);
+
+void quickSortBillID(Billing [], int, int);
+
+int binarySearch(int, int, Customer []);
+
+int binarySearch(int, int, Room []);
+
 void checkFile(fstream&);
 
 void readRoom(Room []);
