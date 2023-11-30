@@ -2,10 +2,12 @@
 #define UTMHOTEL_H
 
 #include <iostream>
+#include <string>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
-
+const int MAX_ROOMS = 100;
 
 // Account creation and Authentication
 class Account
@@ -52,43 +54,68 @@ public:
 
 
 //main functionality
-class FrontDesk{
-    void CheckInGuest();
-    void CheckOutGuest();
-    void manageGuestInfo();
-    void assignRoom();
-    void handleGuestRequest();
+class Room {
+private:
+    int roomNumber;
+    string roomType;
+    bool isOccupied;
+
+public:
+    Room();
+    Room(int number, string type);
+
+    int getRoomNumber() const;
+    string getRoomType() const;
+    bool getIsOccupied() const;
+
+    void setIsOccupied(bool occupied);
+    // Additional room attributes/methods can be added
 };
 
-class ReservationManager{
-    private:
+class ReservationManager {
+private:
+    Room rooms[MAX_ROOMS];
+    int numOfRooms = 0;
 
-    public:
-        void createReservation();
-        void modifyReservation();
-        void cancelReservation();
-        void checkAvaibility();
+public:
+    ReservationManager();
+    void displayAvailableRooms() const;
+    Room getRoom();
+
+    // Additional reservation management functions can be added
 };
 
-class BillingAndInvoicing{
-    private:
-    public:
-        void generateinvoice();
-        void processPayment();
-        void trackBillinginfo();
+class FrontDeskOperations {
+private:
+    ReservationManager& reservationManager;
 
+public:
+    FrontDeskOperations(ReservationManager& rm);
+
+    void checkInGuest(Room& room);
+    void checkOutGuest(Room& room);
+
+    // Additional front desk operations can be added
 };
 
-class RoomInventoryManager{
-    private:
-    public:
-        void trackAvailableRooms();
-        void manageRoomTypes();
-        void updateRoomStatus();
+class BillingAndInvoicing {
+public:
+    void generateInvoice();
+    void processPayment();
+
+    // Additional billing and invoicing functions can be added
 };
 
+class RoomInventoryManager {
+private:
+    ReservationManager& reservationManager;
 
+public:
+    RoomInventoryManager(ReservationManager& rm);
 
+    void displayAvailableRooms() const;
 
+    // Additional room inventory management functions can be added
+};
 
 #endif

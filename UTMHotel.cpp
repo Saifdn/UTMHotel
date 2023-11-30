@@ -158,3 +158,73 @@ void Clerk::createAccount()
          << phone << endl;
     file.close();
 }
+
+//main functionality
+Room:: Room(){}
+Room:: Room(int number, string type){
+    roomNumber = number;
+    roomType = type;
+    isOccupied = false;
+}
+
+int Room::getRoomNumber() const{ 
+    return roomNumber; 
+}
+
+string Room::getRoomType() const{ 
+    return roomType;
+}
+
+bool Room::getIsOccupied() const{
+    return isOccupied;
+}
+
+void Room::setIsOccupied(bool occupied){
+     isOccupied = occupied;
+}
+
+ReservationManager::ReservationManager(){
+    rooms[numOfRooms++] = Room(101, "Single");
+    rooms[numOfRooms++] = Room(102, "Double");
+    // Add more rooms as needed
+}
+
+void ReservationManager::displayAvailableRooms() const {
+    cout << "Available Rooms:" << endl;
+    for (int i = 0; i < numOfRooms; ++i) {
+        if (!rooms[i].getIsOccupied()) {
+            cout << "Room " << rooms[i].getRoomNumber() << " - Type: " << rooms[i].getRoomType() << endl;
+        }
+    }
+}
+
+Room ReservationManager:: getRoom()
+{
+    return rooms[0];
+}
+FrontDeskOperations:: FrontDeskOperations(ReservationManager &rm):reservationManager(rm){}
+
+void FrontDeskOperations:: checkInGuest(Room& room) {
+    room.setIsOccupied(true);
+    cout << "Guest checked in to Room " << room.getRoomNumber() << endl;
+}
+
+void FrontDeskOperations:: checkOutGuest(Room& room) {
+    room.setIsOccupied(false);
+    cout << "Guest checked out from Room " << room.getRoomNumber() << endl;
+}
+
+
+void BillingAndInvoicing::generateInvoice() {
+    cout << "Invoice generated." << endl;
+}
+
+void BillingAndInvoicing::processPayment() {
+    cout << "Payment processed." << endl;
+}
+
+RoomInventoryManager::RoomInventoryManager(ReservationManager& rm) : reservationManager(rm) {}
+
+void RoomInventoryManager::displayAvailableRooms() const {
+    reservationManager.displayAvailableRooms();
+}
