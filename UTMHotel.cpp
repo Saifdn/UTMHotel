@@ -226,7 +226,7 @@ int partitionBillID(Billing bill[], int first, int last){
 /*=========================================================
     Binary Search based on Customer ID
 =========================================================*/
-int binarySearch(int searchkey, int arraysize, const Customer cust[]){
+int binarySearch(int searchkey, int arraysize, Customer cust[]){
     bool found = false;
     int index = -1;
     int middle, left = 0, right = arraysize-1;
@@ -280,9 +280,9 @@ string Customer::getName() {return name;}
 
 string Customer::getContact() {return contact;}
 
-int* Customer::getCheckInDate() {return checkInDate};
+int* Customer::getCheckInDate() {return checkInDate;}
 
-int* Customer::getCheckOutDate() {return checkOutDate};
+int* Customer::getCheckOutDate() {return checkOutDate;}
 
 void Customer::displayCustomerDetails(){
     cout<<"Customer ID      : "<<customerId<<endl
@@ -375,7 +375,7 @@ int Billing:: getroomNumber() {return roomNumber;}
 
 float Billing:: getTotalAmount() {return totalAmount;}
 
-int* Billing:: billingDate() {return billingDate;}
+int* Billing:: getbillingDate() {return billingDate;}
 
 void Billing:: displayBillingDetails() {
     cout << "Billing ID     : " << billingId   << endl

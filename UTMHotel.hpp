@@ -78,7 +78,7 @@ class Billing{
         int getCustomerId();
         int getroomNumber();
         float getTotalAmount();
-        int* billingDate();
+        int* getbillingDate();
         void displayBillingDetails();
 
 };  
