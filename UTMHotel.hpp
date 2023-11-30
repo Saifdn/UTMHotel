@@ -1,3 +1,19 @@
+/****************************** UTM HOTEL ******************************\
+Project: UTMHotel
+Data Structure & Algorithm
+Semester 1, 2023/2024
+
+Section: 10
+Member 1's Name: AHMAD SAIFUDIN BIN NARDI SUSANTO A22EC0035
+Member 2's Name: LIO KOCK HOCK A22EC0185
+
+<Specification File>
+Class declaration
+
+See https://github.com/Saifdn/UTMHotel.
+
+\************************************************************************/
+
 #ifndef UTMHOTEL_H
 #define UTMHOTEL_H
 
@@ -7,115 +23,80 @@
 #include <ctime>
 using namespace std;
 
-const int MAX_ROOMS = 100;
+class Customer{
+    private:
+        int customerId;
+        string name;
+        string contact;
+        int* checkInDate;
+        int* checkOutDate;
 
-// Account creation and Authentication
-class Account
-{
-protected:
-    string username;
-    string password;
-    string name;
-    string address;
-    string email;
-    string phone;
+    public:
+        Customer();
+        Customer(int, string, string, int[], int[]);
+        ~Customer();
+        int getCustomerId();
+        string getName();
+        string getContact();
+        int* getCheckInDate();
+        int* getCheckOutDate();
+        void displayCustomerDetails();
 
-public:
-    Account();
-    void setName(string);
-    string getUsername();
-    string getPassword();
-    string getName();
-    string getAddress();
-    string getEmail();
-    string getPhone();
-    bool authenticate(string, string);
-    void logIn();
-    void signUp();
-    virtual void createAccount() = 0;
+
 };
 
-class Customer : public Account
-{
-public:
-    Customer();
-    Customer(string, string, string, string, string, string);
-    virtual void createAccount();
+class Reservation{
+    private:
+        int reservationId;
+        int customerId;
+        int roomNumber;
+        int* reservationDate;
+
+    public:
+        Reservation();
+        Reservation(int, int, int, int[]);
+        ~Reservation();
+        int getReservationId();
+        int getCustomerId();
+        int getRoomNumber();
+        int* getReservationDate();
+        void displayReservationDetails();
 };
 
-class Clerk : public Account
-{
-public:
-    Clerk();
-    Clerk(string, string, string, string, string, string);
-    virtual void createAccount();
-};
+class Billing{
+    private:
+        int billingId;
+        int customerId;
+        int roomNumber;
+        float totalAmount;
+        int* billingDate;
+    public:
+        Billing();
+        Billing(int, int, int, float, int[]);
+        ~Billing();
+        int getBillingId();
+        int getCustomerId();
+        int getroomNumber();
+        float getTotalAmount();
+        int* billingDate();
+        void displayBillingDetails();
 
+};  
 
-
-//main functionality
-class Room {
-private:
-    int roomNumber;
-    string roomType;
-    bool isOccupied;
-
-public:
-    Room();
-    Room(int number, string type);
-
-    int getRoomNumber() const;
-    string getRoomType() const;
-    bool getIsOccupied() const;
-
-    void setIsOccupied(bool occupied);
-    // Additional room attributes/methods can be added
-};
-
-class ReservationManager {
-private:
-    Room rooms[MAX_ROOMS];
-    int numOfRooms = 0;
-
-public:
-    ReservationManager();
-    void displayAvailableRooms() const;
-    Room getRoom();
-
-    // Additional reservation management functions can be added
-};
-
-class FrontDeskOperations {
-private:
-    ReservationManager& reservationManager;
-
-public:
-    FrontDeskOperations(ReservationManager& rm);
-
-    void checkInGuest(Room& room);
-    void checkOutGuest(Room& room);
-
-    // Additional front desk operations can be added
-};
-
-class BillingAndInvoicing {
-public:
-    void generateInvoice();
-    void processPayment();
-
-    // Additional billing and invoicing functions can be added
-};
-
-class RoomInventoryManager {
-private:
-    ReservationManager& reservationManager;
-
-public:
-    RoomInventoryManager(ReservationManager& rm);
-
-    void displayAvailableRooms() const;
-
-    // Additional room inventory management functions can be added
+class Room{
+    private:
+        int roomNumber;
+        string type;
+        float roomRate;
+        bool isAvailable;
+    public:
+        Room();
+        Room(int, string, float, bool);
+        int getRoomNumber();
+        string getType();
+        float getRoomRate();
+        bool getAvailability();
+        void displayRoomDetails();
 };
 
 #endif

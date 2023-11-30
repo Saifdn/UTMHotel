@@ -1,3 +1,19 @@
+/****************************** UTM HOTEL ******************************\
+Project: UTMHotel
+Data Structure & Algorithm
+Semester 1, 2023/2024
+
+Section: 10
+Member 1's Name: AHMAD SAIFUDIN BIN NARDI SUSANTO A22EC0035
+Member 2's Name: LIO KOCK HOCK A22EC0185
+
+<Application File>
+Main program
+
+See https://github.com/Saifdn/UTMHotel.
+
+\************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,21 +22,8 @@
 using namespace std;
 
 int main() {
-    ReservationManager reservationManager;
-    FrontDeskOperations frontDesk(reservationManager);
-    BillingAndInvoicing billing;
-    RoomInventoryManager roomInventory(reservationManager);
-
-    roomInventory.displayAvailableRooms();
-
-    Room selectedRoom = reservationManager.getRoom();
-
-    frontDesk.checkInGuest(selectedRoom);
-
-    billing.generateInvoice();
-    billing.processPayment();
-
-    frontDesk.checkOutGuest(selectedRoom);
+    
 
     return 0;
 }
+
