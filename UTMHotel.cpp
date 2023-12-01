@@ -423,7 +423,7 @@ void Customer::displayCustomerDetails(){
     cout<<endl;
 }
 
-void Customer::checkIn(){
+void Customer::checkIn(Reservation reservation[], int count){
     fstream file;
     file.open("Customer/customer.txt", ios::app);
 
@@ -434,8 +434,24 @@ void Customer::checkIn(){
     for(int i=0; i<3; i++){
         file<<checkOutDate[i]<<" ";
     }
-    cout<<endl;
+    file<<endl;
     file.close();
+
+    fstream outfile;
+    outfile.open("Reservation/reservation.txt", ios::out);
+
+    for(int i=0; i<count; i++){
+        if(customerId != reservation[i].getCustomerId()){
+            outfile << reservation[i].getReservationId() << " "<< reservation[i].getCustomerId() << " " << reservation[i].getRoomNumber()<<" ";
+            int* temp = reservation[i].getReservationDate();
+            for(int j=0; j<3; j++){
+                outfile<<temp[j]<<" ";
+            }
+            outfile<<endl;
+        }
+    }
+    outfile.close();
+
 }
 
 

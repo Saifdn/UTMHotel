@@ -76,7 +76,7 @@ class Customer{
         int* getCheckInDate();
         int* getCheckOutDate();
         void displayCustomerDetails();
-        void checkIn();
+        void checkIn(Reservation reservation[], int count);
         void checkOut();
 };
 
