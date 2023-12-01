@@ -54,6 +54,29 @@ void readRoom(Room room[]){
     file.close();
 }
 
+int readReservation(Reservation reserve[]){
+
+    fstream file;
+
+    file.open("Reservation/reservation.txt",ios::in);
+
+    checkFile(file);
+
+    int reservationId;
+    int customerId;
+    int roomNumber;
+    int reservationDate[3];
+    int count = 0;
+
+    while (file >> reservationId >> customerId >> roomNumber >> reservationDate[0] >> reservationDate[1] >> reservationDate[2] && !file.eof()) {
+        reserve[count] = Reservation(reservationId, customerId, roomNumber, reservationDate);
+        count++;
+    }
+
+    file.close();
+    return count;
+}
+
 int printAvailableRoom(Room room[]){
     int count=0;
     for(int i = 0; i < 15; i++){
@@ -321,6 +344,30 @@ int binarySearch(int searchkey, int arraysize, Room room[]){
     return index;
 }
 
+/*=========================================================
+    Binary Search based on Room Number
+=========================================================*/
+int binarySearch(int searchkey, int arraysize, Reservation reserve[]){
+    bool found = false;
+    int index = -1;
+    int middle, left = 0, right = arraysize-1;
+
+    while((left<=right) && (!found)){
+        middle = (left + right)/2;
+        if(reserve[middle].getRoomNumber() == searchkey){
+            index = middle;
+            found = true;
+        }
+
+        else if(reserve[middle].getRoomNumber() > searchkey)
+            right = middle-1;
+
+        else 
+            left = middle+1;
+    }
+    return index;
+}
+
 
 
 /*=========================================================
@@ -331,15 +378,15 @@ Customer::Customer() {
     checkOutDate = new int [3];
 }
 
-Customer::Customer(int customerId, string name, string contact, int checkInDate[], int checkOutDate[]) {
+Customer::Customer(int customerId, string name, string contact, int InDate[], int OutDate[]) {
     this -> customerId = customerId;
     this -> name = name;
     this -> contact = contact;
     checkInDate = new int [3];
     checkOutDate = new int [3];
     for(int i = 0; i < 3; i++){
-        this -> checkInDate[i] = checkInDate[i];
-        this -> checkOutDate[i] = checkOutDate[i];
+        checkInDate[i] = InDate[i];
+        checkOutDate[i] = OutDate[i];
     } 
 }
 
@@ -374,6 +421,21 @@ void Customer::displayCustomerDetails(){
         cout<<checkOutDate[i]<<"/";
     }
     cout<<endl;
+}
+
+void Customer::checkIn(){
+    fstream file;
+    file.open("Customer/customer.txt", ios::app);
+
+    file<<customerId<<" "<<name<<" "<<contact<<" ";
+    for(int i=0; i<3; i++){
+        file<<checkInDate[i]<<" ";
+    }
+    for(int i=0; i<3; i++){
+        file<<checkOutDate[i]<<" ";
+    }
+    cout<<endl;
+    file.close();
 }
 
 
@@ -424,10 +486,7 @@ void Reservation::createReservation(Room room[], int roomIndex){
     outfile.open("Reservation/reservation.txt", ios::app);
     outfile << reservationId << " " << customerId << " " << roomNumber << " ";
     for(int i=0; i<3; i++){
-        if(i<2)
-            outfile << reservationDate[i] <<"/";
-        else
-            outfile << reservationDate[i];
+        outfile << reservationDate[i] <<" ";
     }
     outfile << endl;
 
@@ -441,7 +500,6 @@ void Reservation::createReservation(Room room[], int roomIndex){
     }
 
     file.close();
-
 }
 
 

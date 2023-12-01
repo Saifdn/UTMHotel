@@ -22,28 +22,6 @@ See https://github.com/Saifdn/UTMHotel.
 
 using namespace std;
 
-class Customer{
-    private:
-        int customerId;
-        string name;
-        string contact;
-        int* checkInDate;
-        int* checkOutDate;
-
-    public:
-        Customer();
-        Customer(int, string, string, int[], int[]);
-        ~Customer();
-        int getCustomerId();
-        string getName();
-        string getContact();
-        int* getCheckInDate();
-        int* getCheckOutDate();
-        void displayCustomerDetails();
-
-
-};
-
 class Room{
     private:
         int roomNumber;
@@ -80,6 +58,28 @@ class Reservation{
         void createReservation(Room room[], int);
 };
 
+class Customer{
+    private:
+        int customerId;
+        string name;
+        string contact;
+        int* checkInDate;
+        int* checkOutDate;
+
+    public:
+        Customer();
+        Customer(int, string, string, int[], int[]);
+        ~Customer();
+        int getCustomerId();
+        string getName();
+        string getContact();
+        int* getCheckInDate();
+        int* getCheckOutDate();
+        void displayCustomerDetails();
+        void checkIn();
+        void checkOut();
+};
+
 class Billing{
     private:
         int billingId;
@@ -114,9 +114,13 @@ int binarySearch(int, int, Customer []);
 
 int binarySearch(int, int, Room []);
 
+int binarySearch(int, int, Reservation []);
+
 void checkFile(fstream&);
 
 void readRoom(Room []);
+
+int readReservation(Reservation []);
 
 int printAvailableRoom(Room []);
 

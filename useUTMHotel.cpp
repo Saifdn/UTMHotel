@@ -67,11 +67,37 @@ int main() {
             Reservation reservation(16-numOfRooms, 16-numOfRooms, roomNum, date);
             reservation.createReservation(room, roomIndex);
         }
-
-
     }
     else if(choice == 2){
+        string name, number;
+        int roomNumber, inDate[3], outDate[3];
+        cout<<"Enter Name           : ";
+        cin>>name;
+        cout<<"Enter Phone Number   : ";
+        cin>>number;
+        cout<<"Enter Room Reserved  : ";
+        cin>>roomNumber;
 
+        cout<<"Check-In Date!!"<<endl;
+        for(int i=0; i<3; i++){
+            if(i==0)      cout<<"Enter day      : ";
+            else if(i==1) cout<<"Enter month    : ";
+            else          cout<<"Enter year     : ";
+            cin>>inDate[i];
+        }
+        cout<<"Check-Out Date!!"<<endl;
+        for(int i=0; i<3; i++){
+            if(i==0)      cout<<"Enter day      : ";
+            else if(i==1) cout<<"Enter month    : ";
+            else          cout<<"Enter year     : ";
+            cin>>outDate[i];
+        }
+
+        Reservation reservation[15];
+        int numberOfReservation = readReservation(reservation);
+        int index = binarySearch(roomNumber, numberOfReservation, reservation);
+        Customer customer(reservation[index].getCustomerId(), name, number, inDate, outDate);
+        customer.checkIn();
     }
     else if(choice == 3){
 
