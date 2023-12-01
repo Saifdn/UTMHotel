@@ -44,6 +44,23 @@ class Customer{
 
 };
 
+class Room{
+    private:
+        int roomNumber;
+        string type;
+        float roomRate;
+        bool isAvailable;
+    public:
+        Room();
+        Room(int, string, float, bool);
+        int getRoomNumber();
+        string getType();
+        float getRoomRate();
+        void setAvailability(bool);
+        bool getAvailability();
+        void displayRoomDetails();
+};
+
 class Reservation{
     private:
         int reservationId;
@@ -60,6 +77,7 @@ class Reservation{
         int getRoomNumber();
         int* getReservationDate();
         void displayReservationDetails();
+        void createReservation(Room room[], int);
 };
 
 class Billing{
@@ -82,22 +100,6 @@ class Billing{
 
 };  
 
-class Room{
-    private:
-        int roomNumber;
-        string type;
-        float roomRate;
-        bool isAvailable;
-    public:
-        Room();
-        Room(int, string, float, bool);
-        int getRoomNumber();
-        string getType();
-        float getRoomRate();
-        bool getAvailability();
-        void displayRoomDetails();
-};
-
 void bubbleSort(Room [], int);
 
 void mergeSort(Customer [], int, int);
@@ -116,6 +118,6 @@ void checkFile(fstream&);
 
 void readRoom(Room []);
 
-void printAvailableRoom(Room []);
+int printAvailableRoom(Room []);
 
 #endif

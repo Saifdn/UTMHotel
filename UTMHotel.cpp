@@ -54,7 +54,8 @@ void readRoom(Room room[]){
     file.close();
 }
 
-void printAvailableRoom(Room room[]){
+int printAvailableRoom(Room room[]){
+    int count=0;
     for(int i = 0; i < 15; i++){
         if(room[i].getAvailability()){
             cout<<left
@@ -62,8 +63,11 @@ void printAvailableRoom(Room room[]){
                 <<setw(8)<<room[i].getType()
                 <<setw(3)<<"RM "
                 <<setw(4)<<room[i].getRoomRate()<<" per night"<<endl;
+            count++;
         }
     }
+
+    return count;
 }
 
 
@@ -163,7 +167,6 @@ int partitionRoomNumber(Room room[], int first, int last){
         while(room[bottom].getRoomNumber()<pivot){bottom++;}
         if(bottom<top)
         {
-            //swap Room Number
             temp = room[bottom];
             room[bottom]= room[top];
             room[top] = temp;
@@ -204,7 +207,6 @@ int partitionCustID(Customer cust[], int first, int last){
         while(cust[bottom].getCustomerId()<pivot){bottom++;}
         if(bottom<top)
         {
-            //swap Room Number
             temp = cust[bottom];
             cust[bottom] = cust[top];
             cust[top] = temp;
@@ -382,14 +384,15 @@ Reservation::Reservation() {
     reservationDate = new int[3];
 }
 
-Reservation::Reservation(int reservationId, int customerId, int roomNumber, int reservationDate[]){
+Reservation::Reservation(int reservationId, int customerId, int roomNumber, int Date[]){
     this -> reservationId = reservationId;
     this -> customerId = customerId;
     this -> roomNumber = roomNumber;
     reservationDate = new int[3];
     for(int i = 0; i < 3; i++){
-        this -> reservationDate[i] = reservationDate[i];
-    } 
+        reservationDate[i] = Date[i];
+    }
+    
 }
 
 Reservation::~Reservation(){
@@ -415,6 +418,33 @@ void Reservation::displayReservationDetails(){
     }
     cout<<endl;
 };
+
+void Reservation::createReservation(Room room[], int roomIndex){
+    fstream outfile;
+    outfile.open("Reservation/reservation.txt", ios::app);
+    outfile << reservationId << " " << customerId << " " << roomNumber << " ";
+    for(int i=0; i<3; i++){
+        if(i<2)
+            outfile << reservationDate[i] <<"/";
+        else
+            outfile << reservationDate[i];
+    }
+    outfile << endl;
+
+    readRoom(room);
+    room[roomIndex].setAvailability(0);
+
+    fstream file;
+    file.open("Room/room.txt", ios::out);
+    for(int i=0; i<15; i++){
+        file << room[i].getRoomNumber() << " " << room[i].getType() << " " << room[i].getRoomRate() << " " << room[i].getAvailability() << endl;
+    }
+
+    file.close();
+
+}
+
+
 
 
 /*=========================================================
@@ -480,6 +510,8 @@ int Room:: getRoomNumber() {return roomNumber;}
 string Room:: getType() {return type;}
 
 float Room:: getRoomRate() {return roomRate;}
+
+void Room:: setAvailability (bool availability){isAvailable = availability;}
 
 bool Room:: getAvailability() {return isAvailable;}
 

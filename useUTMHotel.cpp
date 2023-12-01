@@ -47,13 +47,27 @@ int main() {
         else
             bubbleSort(room, 15);
 
-        printAvailableRoom(room);
+        int numOfRooms = printAvailableRoom(room);
 
         int roomNum;
         cout<<"Enter room no. : ";
         cin>>roomNum;
 
-        cout<<"test Index: "<<binarySearch(roomNum, 15, room);
+        int roomIndex = binarySearch(roomNum, 15, room);
+
+        if(roomIndex>=0){
+            int date[3];
+            for(int i=0; i<3; i++){
+                if(i==0)      cout<<"Enter day      : ";
+                else if(i==1) cout<<"Enter month    : ";
+                else          cout<<"Enter year     : ";
+                cin>>date[i];
+            }
+
+            Reservation reservation(16-numOfRooms, 16-numOfRooms, roomNum, date);
+            reservation.createReservation(room, roomIndex);
+        }
+
 
     }
     else if(choice == 2){
