@@ -48,7 +48,7 @@ class Reservation{
 
     public:
         Reservation();
-        Reservation(int, int, int, int[]);
+        Reservation(int, int, int, int*);
         ~Reservation();
         int getReservationId();
         int getCustomerId();
@@ -77,7 +77,7 @@ class Customer{
         int* getCheckOutDate();
         void displayCustomerDetails();
         void checkIn(Reservation reservation[], int count);
-        void checkOut();
+        void checkOut(int, int);
 };
 
 class Billing{
@@ -121,6 +121,8 @@ void checkFile(fstream&);
 void readRoom(Room []);
 
 int readReservation(Reservation []);
+
+int readCustomer(Customer []);
 
 int printAvailableRoom(Room []);
 

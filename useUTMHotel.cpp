@@ -96,13 +96,11 @@ int main() {
         Reservation reservation[15];
         int numberOfReservation = readReservation(reservation);
         int index = binarySearch(roomNumber, numberOfReservation, reservation);
-
         if(index == -1){
             cout<<"Reservation does not exist..."<<endl;
             system("PAUSE");
             exit(1);
         }
-
         Customer customer(reservation[index].getCustomerId(), name, number, inDate, outDate);
         customer.checkIn(reservation, numberOfReservation);
 
@@ -111,8 +109,24 @@ int main() {
         //sort by check-out date
     }
     else if(choice == 3){
+        int custId;
+        cout<<"Enter the Customer ID to Check-Out: ";
+        cin>>custId;
 
-    }
+        Customer cust[15];
+        int numberOfCustomer = readCustomer(cust);
+
+        for(int i=0; i<numberOfCustomer; i++)
+        {
+            if(cust[i].getCustomerId() != custId && i==0){
+                cust[i].checkOut(numberOfCustomer, i);
+            }
+            else if(cust[i].getCustomerId() != custId && i!=0){
+                cust[i].checkOut(numberOfCustomer, i);
+            }
+        }
+        
+    } 
     else{
 
     }

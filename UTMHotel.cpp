@@ -55,11 +55,8 @@ void readRoom(Room room[]){
 }
 
 int readReservation(Reservation reserve[]){
-
     fstream file;
-
     file.open("Reservation/reservation.txt",ios::in);
-
     checkFile(file);
 
     int reservationId;
@@ -68,9 +65,28 @@ int readReservation(Reservation reserve[]){
     int reservationDate[3];
     int count = 0;
 
-    while (file >> reservationId >> customerId >> roomNumber >> reservationDate[0] >> reservationDate[1] >> reservationDate[2] && !file.eof()) {
+    while (file >> reservationId >> customerId >> roomNumber >> reservationDate[0] >> reservationDate[1] >> reservationDate[2] && count<15) {
         reserve[count] = Reservation(reservationId, customerId, roomNumber, reservationDate);
         count++;
+    }
+
+    file.close();
+    return count;
+}
+
+int readCustomer(Customer cust[]){
+    fstream file;
+    file.open("Customer/customer.txt",ios::in);
+    checkFile(file);
+
+    int customerId;
+    string name, contact;
+    int checkInDate[3];
+    int checkOutDate[3];
+    int count = 0;
+
+    while (file >> customerId >> name >> contact >> checkInDate[0] >> checkInDate[1] >> checkInDate[2] >> checkOutDate[0] >> checkOutDate[1] >> checkOutDate[2] && count<15) {
+        cust[count++] = Customer(customerId, name, contact, checkInDate, checkOutDate);
     }
 
     file.close();
@@ -423,7 +439,7 @@ void Customer::displayCustomerDetails(){
     cout<<endl;
 }
 
-void Customer::checkIn(Reservation reservation[], int count){
+void Customer::checkIn(Reservation reserve[], int count){
     fstream file;
     file.open("Customer/customer.txt", ios::app);
 
@@ -440,18 +456,54 @@ void Customer::checkIn(Reservation reservation[], int count){
     fstream outfile;
     outfile.open("Reservation/reservation.txt", ios::out);
 
-    for(int i=0; i<count; i++){
-        if(customerId != reservation[i].getCustomerId()){
-            outfile << reservation[i].getReservationId() << " "<< reservation[i].getCustomerId() << " " << reservation[i].getRoomNumber()<<" ";
-            int* temp = reservation[i].getReservationDate();
-            for(int j=0; j<3; j++){
-                outfile<<temp[j]<<" ";
-            }
-            outfile<<endl;
+    for(int i = 0; i < count; i++){
+        if(customerId != reserve[i].getCustomerId()){
+            int* temp = reserve[i].getReservationDate();
+            outfile << reserve[i].getReservationId() << " "
+                    << reserve[i].getCustomerId() << " " 
+                    << reserve[i].getRoomNumber()<< " "
+                    <<*(temp)<<" "
+                    <<*(temp+1)<<" "
+                    <<*(temp+2)<<endl;
+            delete [] temp;
         }
     }
+
+    
+    
     outfile.close();
 
+}
+
+void Customer::checkOut(int count, int j){
+    if(j==0){
+        fstream file;
+        file.open("Customer/customer.txt", ios::out);
+        file<<customerId<<" "<<name<<" "<<contact<<" ";
+        for(int i=0; i<3; i++){
+            file<<checkInDate[i]<<" ";
+        }
+        for(int i=0; i<3; i++){
+            file<<checkOutDate[i]<<" ";
+        }
+        file << endl;
+        file.close();
+    }
+    
+    else{
+        fstream file;
+        file.open("Customer/customer.txt", ios::app);
+        file<<customerId<<" "<<name<<" "<<contact<<" ";
+        for(int i=0; i<3; i++){
+            file<<checkInDate[i]<<" ";
+        }
+        for(int i=0; i<3; i++){
+            file<<checkOutDate[i]<<" ";
+        }
+        file << endl;
+        file.close();
+    }
+    
 }
 
 
@@ -462,15 +514,22 @@ Reservation::Reservation() {
     reservationDate = new int[3];
 }
 
-Reservation::Reservation(int reservationId, int customerId, int roomNumber, int Date[]){
+// Reservation::Reservation(int reservationId, int customerId, int roomNumber, int Date[]){
+//     this -> reservationId = reservationId;
+//     this -> customerId = customerId;
+//     this -> roomNumber = roomNumber;
+//     reservationDate = new int[3];
+//     for(int i = 0; i < 3; i++){
+//         reservationDate[i] = Date[i];
+//     }
+    
+// }
+
+Reservation::Reservation(int reservationId, int customerId, int roomNumber, int* reservationDate){
     this -> reservationId = reservationId;
     this -> customerId = customerId;
     this -> roomNumber = roomNumber;
-    reservationDate = new int[3];
-    for(int i = 0; i < 3; i++){
-        reservationDate[i] = Date[i];
-    }
-    
+    this -> reservationDate = reservationDate;
 }
 
 Reservation::~Reservation(){
